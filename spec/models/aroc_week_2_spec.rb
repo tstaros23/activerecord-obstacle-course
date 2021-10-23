@@ -19,7 +19,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    orders_of_user_3 = Order.where(user_id: @user_3.id)
     # ------------------------------------------------------------
 
     # Expectation
@@ -37,8 +37,8 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     orders = Order.all.sort_by { |order| order.amount }.reverse
     # ------------------------------------------------------------
 
-    # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    orders = Order.order(amount: :desc)
+
     # ------------------------------------------------------------
 
     # Expectation
@@ -56,8 +56,8 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     orders = Order.all.sort_by { |order| order.amount }
     # ------------------------------------------------------------
 
-    # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    orders = Order.order(:amount)
+
     # ------------------------------------------------------------
 
     # Expectation
@@ -76,7 +76,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    items = Item.where.not(id: items_not_included)
     # ------------------------------------------------------------
 
     # Expectation
@@ -90,9 +90,9 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     order = Order.find(@order_3.id)
     grouped_items = order.items.sort_by { |item| item.name }
     # ------------------------------------------------------------
-
+    # require "pry"; binding.pry
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    grouped_items = Item.joins(:order_items).where(order_items: {order_id: @order_3.id} ).order(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -107,7 +107,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    names = Item.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -144,7 +144,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    names = Item.joins(:order_items).pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation

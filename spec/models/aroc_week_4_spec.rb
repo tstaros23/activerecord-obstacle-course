@@ -17,7 +17,7 @@ describe 'ActiveRecord Obstacle Course, Week 4' do
     # -----------------------------------------------------------
 
     # ------------------ Using ActiveRecord ---------------------
-    # Solution goes here
+    total_sales = Order.sum(:amount)
     # -----------------------------------------------------------
 
     # Expectation
@@ -33,7 +33,7 @@ describe 'ActiveRecord Obstacle Course, Week 4' do
     # -----------------------------------------------------------
 
     # ------------------ Using ActiveRecord ---------------------
-    # Solution goes here
+    total_sales = Order.where.not(user: @user_2).sum(:amount)
     # -----------------------------------------------------------
 
     # Expectation
@@ -49,7 +49,8 @@ describe 'ActiveRecord Obstacle Course, Week 4' do
     # -----------------------------------------------------------
 
     # ------------------ Improved Solution ----------------------
-    #  Solution goes here
+    orders = Order.joins(:order_items).where(order_items: {item: @item_4})
+    orders = @item_4.orders
     # -----------------------------------------------------------
 
     # Expectation
@@ -66,7 +67,7 @@ describe 'ActiveRecord Obstacle Course, Week 4' do
     # -----------------------------------------------------------
 
     # ------------------ Improved Solution ----------------------
-    #  Solution goes here
+    orders = @item_4.orders.where(user: @user_2)
     # -----------------------------------------------------------
 
     # Expectation
@@ -88,7 +89,9 @@ describe 'ActiveRecord Obstacle Course, Week 4' do
     # ------------------------------------------------------------
 
     # ------------------ ActiveRecord Solution ----------------------
-    # Solution goes here
+    ordered_items = Item.joins(:item_orders)where('item.count ? > 1')
+    #may need group or having
+    require "pry"; binding.pry
     # ---------------------------------------------------------------
 
     # Expectations
