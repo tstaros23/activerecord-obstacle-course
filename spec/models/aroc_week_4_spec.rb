@@ -89,9 +89,7 @@ describe 'ActiveRecord Obstacle Course, Week 4' do
     # ------------------------------------------------------------
 
     # ------------------ ActiveRecord Solution ----------------------
-    ordered_items = Item.joins(:item_orders)where('item.count ? > 1')
-    #may need group or having
-    require "pry"; binding.pry
+    ordered_items = Item.joins(:order_items).group(:id, :order_id).having("count(order_id) >= 1").distinct
     # ---------------------------------------------------------------
 
     # Expectations
