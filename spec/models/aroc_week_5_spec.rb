@@ -31,17 +31,14 @@ describe 'ActiveRecord Obstacle Course, Week 5' do
     # ------------------------------------------------------------
 
     # ------------------ ActiveRecord Solution ----------------------
-    # Solution goes here
-    # When you find a solution, experiment with adjusting your method chaining
-    # Which ones are you able to switch around without relying on Ruby's Enumerable methods?
+    ordered_items_names = Item.joins(:order_items).group(:id, :order_id).having("count(order_id) >= 1").distinct.pluck(:name)
     # ---------------------------------------------------------------
-
     # Expectations
     expect(ordered_items_names).to eq(expected_result)
     expect(ordered_items_names).to_not include(unordered_items)
   end
 
-  xit '27. returns a table of information for all users orders' do
+  it '27. returns a table of information for all users orders' do
     custom_results = [@user_3, @user_1, @user_2]
 
     # using a single ActiveRecord call, fetch a joined object that mimics the
@@ -53,7 +50,11 @@ describe 'ActiveRecord Obstacle Course, Week 5' do
     # Zoolander      |         6
 
     # ------------------ ActiveRecord Solution ----------------------
-    custom_results = []
+
+    custom_results = User.select('users.name, count(orders.*) AS total_order_count')
+              .joins(:orders)
+              .group(:id)
+              .order(:total_order_count)
     # ---------------------------------------------------------------
 
     expect(custom_results[0].name).to eq(@user_3.name)
